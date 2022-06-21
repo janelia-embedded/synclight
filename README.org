@@ -1,0 +1,72 @@
+#+TITLE: synclight
+#+AUTHOR: Peter Polidoro
+#+EMAIL: peter@polidoro.io
+
+* Repository Information
+- Author :: Peter Polidoro
+- License :: BSD
+
+* PlatformIO
+
+** Install platformio, zephyr, and freescalekinetis
+
+#+BEGIN_SRC sh
+
+guix shell platformio
+pio pkg install -g --tool "platformio/framework-zephyr"
+pio pkg install -g --platform "platformio/freescalekinetis@^9.2.0"
+
+#+END_SRC
+
+** Build and upload
+
+#+BEGIN_SRC sh
+
+guix shell platformio
+cd synclight/platformio
+pio run -e frdm_k64f --target upload
+
+#+END_SRC
+
+* Docker and West
+
+** Install west
+
+#+BEGIN_SRC sh
+
+python3 -m venv ~/zephyrproject/.venv
+source ~/zephyrproject/.venv/bin/activate
+pip install west
+
+#+END_SRC
+
+** Get Zephyr
+
+#+BEGIN_SRC sh
+
+west init ~/zephyrproject
+cd ~/zephyrproject
+west update
+west zephyr-export
+
+#+END_SRC
+
+** Run Docker Image
+
+#+BEGIN_SRC sh
+
+docker run -it --rm --privileged -p 5900:5900 -v ~/zephyrproject:/workdir -v /dev:/dev zephyrprojectrtos/zephyr-build:latest
+
+#+END_SRC
+
+** Build the gptp Sample
+
+#+BEGIN_SRC sh
+
+cd zephyr
+sudo west build -p auto -b frdm_k64f samples/net/gptp
+sudo west flash
+# dependency problems!
+exit
+
+#+END_SRC
