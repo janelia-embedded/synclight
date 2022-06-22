@@ -70,3 +70,39 @@ sudo west flash
 exit
 
 #+END_SRC
+
+
+* Test
+
+** Install linuxptp
+
+#+BEGIN_SRC sh
+
+sudo apt install linuxptp
+
+#+END_SRC
+
+** Find host ip address
+
+#+BEGIN_SRC sh
+
+ip addr
+
+#+END_SRC
+
+** Setup ptp4l client
+
+#+BEGIN_SRC sh
+
+ptp4l -i eno1 -m
+
+#+END_SRC
+
+** Open miniterm
+
+#+BEGIN_SRC sh
+
+guix shell python-pyserial
+python3 -m serial.tools.miniterm /dev/ttyACM0 115200
+
+#+END_SRC
