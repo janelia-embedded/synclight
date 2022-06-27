@@ -13,7 +13,7 @@
 #+BEGIN_SRC sh
 
 guix shell platformio
-pio pkg install -g --tool "platformio/framework-zephyr"
+pio pkg install -g --tool "platformio/framework-zephyr@^2.20701.220422"
 pio pkg install -g --platform "platformio/freescalekinetis@^9.2.0"
 
 #+END_SRC
